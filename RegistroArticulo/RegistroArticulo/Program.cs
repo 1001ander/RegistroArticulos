@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using RegistroArticulo.Components;
 using RegistroArticulo.DAL;
+using RegistroArticulo.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,11 @@ builder.Services.AddRazorComponents()
 
 var ConStr = builder.Configuration.GetConnectionString("ConStr");
 builder.Services.AddDbContext<Contexto>(o => o.UseSqlite(ConStr));
+
+//Inyeccion del servicio
+
+builder.Services.AddScoped<RegistrosService>();
+
 
 
 
