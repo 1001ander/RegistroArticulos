@@ -1,0 +1,59 @@
+﻿@page "/Articulo/Index"
+@using RegistroArticulo.Models
+@using RegistroArticulo.Services
+
+@inject RegistrosService registrosService
+
+<PageTitle>Index</PageTitle>
+
+<div class="container">
+    <div class="card shadow-lg">
+        @*Header*@
+        <div class="card-header">
+            <h4 class="card-title"><b>Listado <de> Articulos</de> </b></h4>
+        </div>
+    </div>
+
+</div>
+
+@code{
+    public List<Articulos> ListaArticulos { get; set; } = [];
+
+    public string Filtro { get; set; } = string.Empty;
+
+    public string ValorFiltro { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync(){
+        ListaArticulos = await registrosService.Listar(e => e.ArticuloId > 0);
+    }
+
+    private async Task Restablecer(){
+        Filtro = string.Empty;
+        ValorFiltro = string.Empty;
+        ListaArticulos = await registrosService.Listar(e => e.ArticuloId > 0);
+
+    }
+
+    private async Task Buscar(){
+        if (ValorFiltro != "")
+        {
+            if (Filtro == "Id" && int.TryParse(ValorFiltro, out int id))
+            {
+                ListaArticulos = await registrosService
+                .Listar(e => e.ArticuloId == id);
+            }
+            else if (Filtro == "Nombre")
+            {
+                ListaArticulos = await registrosService
+                .Listar(e => e.NombreArticulo.Contains(ValorFiltro));
+            }
+        }
+        else
+            ListaArticulos = await registrosService
+            .Listar(e => e.ArticuloId > 0);
+
+
+    }
+    
+}
+
