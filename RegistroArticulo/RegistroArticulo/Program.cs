@@ -1,10 +1,19 @@
+using Microsoft.EntityFrameworkCore;
 using RegistroArticulo.Components;
+using RegistroArticulo.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+//Inyeccion del Contexto
+
+var ConStr = builder.Configuration.GetConnectionString("ConStr");
+builder.Services.AddDbContext<Contexto>(o => o.UseSqlite(ConStr));
+
+
 
 var app = builder.Build();
 
