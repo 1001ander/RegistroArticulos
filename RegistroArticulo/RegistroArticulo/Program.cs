@@ -15,9 +15,11 @@ builder.Services.AddRazorComponents()
 var ConStr = builder.Configuration.GetConnectionString("ConStr");
 builder.Services.AddDbContext<Contexto>(o => o.UseSqlite(ConStr));
 
+
 //Inyeccion del servicio
 
 builder.Services.AddScoped<RegistrosService>();
+
 
 
 
