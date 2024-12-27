@@ -7,6 +7,10 @@ namespace RegistroArticulo.Models
         [Key]
         public int ArticuloId { get; set; }
 
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Solo se permiten Letras")]
+        [Required(ErrorMessage ="Campo NombreArticulo Obligatorio")]
+        public string? NombreArticulo { get; set; }
+
         [Required(ErrorMessage = "El Campo Descripcion es Obligatorio")]
         [StringLength(100, ErrorMessage = "La Descripcion no puede exceder los 100 caracteres")]
         
