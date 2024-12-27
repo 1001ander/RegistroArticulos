@@ -12,10 +12,12 @@ namespace RegistroArticulo.Models
         
          public string? Descripcion { get; set; } = string.Empty;
 
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Solo se permiten numeros")]
         [Required(ErrorMessage = "El Campo Cantidad Es Obligatorio")]
         [Range(1, int.MaxValue, ErrorMessage = "La Cantidad debe ser Mayor a 0")]
         public int Cantidad { get; set; }
 
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Solo se permiten numeros")]
         [Required(ErrorMessage = "El Campo Precio es obligatorio")]
         [Range(1, int.MaxValue, ErrorMessage = "El Precio debe ser mayor a 0")]
         public decimal Precio { get; set; }
