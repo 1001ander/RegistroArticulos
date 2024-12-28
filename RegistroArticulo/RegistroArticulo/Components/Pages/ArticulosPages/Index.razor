@@ -12,8 +12,114 @@
         <div class="card-header">
             <h4 class="card-title"><b>Listado <de> Articulos</de> </b></h4>
         </div>
-    </div>
+        @*Body*@
+        <div class="card-body ">
+            <div class="row">
+                @*filtrar*@
+               <div class="col-3">
+                   <label class="form-label"><b>Filtro</b></label>
+               </div>
+             
+               @*Valor filtro*@
+               <div class="col-3">
+                <label class="form-label"><b>B&uacute;squeda</b></label>
+               </div>
+            </div>
+            @*Imputs y Filtrado*@
+            <div class="row">
+                @*Filtro*@
+                <div class="col-3">
+                    <InputSelect class="form-select" @bind-Value="Filtro">
+                        <option value="" selected disabled>Selecione una opci&oacute;n</option>
+                        <option value="Id">Id</option>
+                        <option value="Nombre">Nombre</option>
+                        
 
+                    </InputSelect>
+                </div>
+                @*Valor filtro*@
+                <div class="col-3">
+                    <div class="input-group">
+                        <InputText class="form-control" @bind-Value="ValorFiltro"></InputText>
+                        <button type="button" class="btn btn-outline-primary bi bi-search" @onclick="Buscar"></button>
+                    </div>
+                </div>
+                @*Boton Restablecer*@
+                <div class="col-auto">
+                    <button type="button"
+                            class="btn btn-outline-secondary bi bi-arrow-clockwise"
+                            @onclick="Restablecer">
+                    </button>
+
+                </div>
+
+                @*Boton Crear*@
+                <div class="col text-end">
+                    <a href="/Articulo/Create">
+                        <button type="button" class="btn btn-outline-success bi bi-plus">Crear</button>
+                    </a>
+
+                </div>
+
+
+            </div>
+            @*Tabla*@
+            <table class="table table-bordered mt-4">
+                @*Encabezado de la tabla*@
+                <thead>
+                    <tr>
+                        <th>ArticuloId</th>
+                        <th>NombreArticulo</th>
+                        <th>Descripci&oacute;n</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Editar</th>
+                        <th>Observar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                @*Datos de la tabla*@
+                <tbody>
+                    @foreach(var articulo in ListaArticulos){
+                        <tr>
+                            <td>@articulo.ArticuloId</td>
+                            <td>@articulo.NombreArticulo</td>
+                            <td>@articulo.Descripcion</td>
+                            <td>@articulo.Cantidad</td>
+                            <td>@articulo.Precio</td>
+                            @*Editar*@
+                            <td>
+                                <a href="/Articulo/Edit/@articulo.ArticuloId">
+                                    <button type="button" class="btn btn-outline-primary bi bi-pencil-square"></button>
+                                </a>
+                            </td>
+                            @*Observar*@
+                            <td>
+                                <a href="/Articulo/Details/@articulo.ArticuloId">
+                                    <button type="button" class="btn btn-outline-primary bi bi-eye-fill"></button>
+                                </a>
+                            </td>
+                            @*Eliminar*@
+                            <td>
+                                <a href="/Articulo/Delete/@articulo.ArticuloId">
+                                    <button type="button" class="btn btn-outline-primary bi bi-trash2"></button>
+                                </a>
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+ 
+           
+        </div>
+        @*Footer*@
+        <div class="card-footer">
+            <h6><b>Total de Articulos: </b>@ListaArticulos.Count</h6>
+        </div>
+    </div>
+    
 </div>
 
 @code{
