@@ -14,10 +14,14 @@
         </div>
         @*Body*@
         <div class="card-body ">
+          
+
             <div class="row">
                 @*filtrar*@
                <div class="col-3">
                    <label class="form-label"><b>Filtro</b></label>
+                    
+
                </div>
              
                @*Valor filtro*@
@@ -64,7 +68,7 @@
 
             </div>
             @*Tabla*@
-            <table class="table table-bordered mt-4">
+            <table class="table table-bordered mt-5">
                 @*Encabezado de la tabla*@
                 <thead>
                     <tr>
@@ -77,6 +81,8 @@
                         <th>Observar</th>
                         <th>Eliminar</th>
                     </tr>
+
+
                 </thead>
                 @*Datos de la tabla*@
                 <tbody>
@@ -87,6 +93,7 @@
                             <td>@articulo.Descripcion</td>
                             <td>@articulo.Cantidad</td>
                             <td>@articulo.Precio</td>
+                            
                             @*Editar*@
                             <td>
                                 <a href="/Articulo/Edit/@articulo.ArticuloId">
@@ -110,7 +117,25 @@
                     }
 
                 </tbody>
+                <div class="col-auto">
+                    <div class="input-group">
+                        <InputText class="form-control" @bind-Value="ValorFiltro"></InputText>
+                        
+                    </div>
+                  
+                    <div class="col-auto">
+                        <div class="input-group">
+                            <InputText class="form-control" @bind-Value="ValorFiltro"></InputText>
+
+                        </div>
+
+                    </div>
+
+                </div>
+             
+                    
             </table>
+           
  
            
         </div>
