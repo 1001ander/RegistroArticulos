@@ -1,0 +1,65 @@
+﻿@page "/Articulo/Details/{ArticuloId:int}"
+@using RegistroArticulo.Models
+@using RegistroArticulo.Services
+
+@inject RegistrosService registrosService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Detalles del Artículo</PageTitle>
+
+<div class="container">
+    <div class="card shadow-lg">
+        @* Header *@
+        <div class="card-header">
+            <h4 class="card-title">Detalles del Artículo</h4>
+        </div>
+
+        @* Body *@
+        <div class="card-body">
+            @if (articulo != null)
+            {
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>ID del Artículo:</strong> @articulo.ArticuloId</p>
+                        <p><strong>Nombre:</strong> @articulo.NombreArticulo</p>
+                        <p><strong>Descripción:</strong> @articulo.Descripcion</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Cantidad:</strong> @articulo.Cantidad</p>
+                        <p><strong>Precio:</strong> @articulo.Precio:C</p>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <button type="button" class="btn btn-secondary" @onclick="Volver">Volver</button>
+                </div>
+            }
+            else
+            {
+                <p class="text-danger">El artículo no fue encontrado.</p>
+            }
+        </div>
+
+        @* Footer *@
+        <div class="card-footer">
+            <small class="text-muted">Registro de Artículos</small>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int ArticuloId { get; set; }
+
+    private Articulos? articulo;
+
+    protected override async Task OnInitializedAsync()
+    {
+        articulo = await registrosService.Buscar(ArticuloId);
+    }
+
+    private void Volver()
+    {
+        NavigationManager.NavigateTo("/Articulo/Index");
+    }
+}
