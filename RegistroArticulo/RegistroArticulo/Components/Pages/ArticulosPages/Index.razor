@@ -94,16 +94,17 @@
                             <td class="text-center">@articulo.Cantidad</td>
                             <td class="text-center">@articulo.Precio</td>
                             
-                            @*Editar*@
-                            <td>
-                                <a href="/Articulo/Edit/@articulo.ArticuloId">
-                                    <button type="button" class="btn btn-outline-primary bi bi-pencil-square"></button>
-                                </a>
-                            </td>
+                            
                             @*Observar*@
                             <td>
                                 <a href="/Articulo/Details/@articulo.ArticuloId">
                                     <button type="button" class="btn btn-outline-primary bi bi-eye-fill"></button>
+                                </a>
+                            </td>
+                            @*Editar*@
+                            <td>
+                                <a href="/Articulo/Edit/@articulo.ArticuloId">
+                                    <button type="button" class="btn btn-outline-primary bi bi-pencil-square"></button>
                                 </a>
                             </td>
                             @*Eliminar*@
