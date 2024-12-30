@@ -14,20 +14,20 @@
         </div>
         @*Body*@
         <div class="card-body ">
-          
+
 
             <div class="row">
                 @*filtrar*@
-               <div class="col-3">
-                   <label class="form-label"><b>Filtro</b></label>
-                    
+                <div class="col-3">
+                    <label class="form-label"><b>Filtro</b></label>
 
-               </div>
-             
-               @*Valor filtro*@
-               <div class="col-3">
-                <label class="form-label"><b>B&uacute;squeda</b></label>
-               </div>
+
+                </div>
+
+                @*Valor filtro*@
+                <div class="col-3">
+                    <label class="form-label"><b>B&uacute;squeda</b></label>
+                </div>
             </div>
             @*Imputs y Filtrado*@
             <div class="row">
@@ -37,7 +37,7 @@
                         <option value="" selected disabled>Selecione una opci&oacute;n</option>
                         <option value="Id">Id</option>
                         <option value="Nombre">Nombre</option>
-                        
+
 
                     </InputSelect>
                 </div>
@@ -77,8 +77,8 @@
                         <th>Descripci&oacute;n</th>
                         <th>Cantidad</th>
                         <th>Precio</th>
-                        <th>Editar</th>
                         <th>Observar</th>
+                        <th>Editar</th>
                         <th>Eliminar</th>
                     </tr>
 
@@ -86,15 +86,16 @@
                 </thead>
                 @*Datos de la tabla*@
                 <tbody>
-                    @foreach(var articulo in ListaArticulos){
+                    @foreach (var articulo in ListaArticulos)
+                    {
                         <tr>
                             <td class="text-center">@articulo.ArticuloId</td>
                             <td class="text-center">@articulo.NombreArticulo</td>
                             <td class="text-center">@articulo.Descripcion</td>
                             <td class="text-center">@articulo.Cantidad</td>
                             <td class="text-center">@articulo.Precio</td>
-                            
-                            
+
+
                             @*Observar*@
                             <td>
                                 <a href="/Articulo/Details/@articulo.ArticuloId">
@@ -118,44 +119,47 @@
                     }
 
                 </tbody>
-               
 
-             
-                    
+
+
+
             </table>
-           
 
-           
- 
-           
+
+
+
+
         </div>
         @*Footer*@
         <div class="card-footer">
             <h6><b>Total de Articulos: </b>@ListaArticulos.Count</h6>
         </div>
     </div>
-    
+
 </div>
 
-@code{
+@code {
     public List<Articulos> ListaArticulos { get; set; } = [];
 
     public string Filtro { get; set; } = string.Empty;
 
     public string ValorFiltro { get; set; } = string.Empty;
 
-    protected override async Task OnInitializedAsync(){
+    protected override async Task OnInitializedAsync()
+    {
         ListaArticulos = await registrosService.Listar(e => e.ArticuloId > 0);
     }
 
-    private async Task Restablecer(){
+    private async Task Restablecer()
+    {
         Filtro = string.Empty;
         ValorFiltro = string.Empty;
         ListaArticulos = await registrosService.Listar(e => e.ArticuloId > 0);
 
     }
 
-    private async Task Buscar(){
+    private async Task Buscar()
+    {
         if (ValorFiltro != "")
         {
             if (Filtro == "Id" && int.TryParse(ValorFiltro, out int id))
@@ -175,6 +179,5 @@
 
 
     }
-    
-}
 
+}
