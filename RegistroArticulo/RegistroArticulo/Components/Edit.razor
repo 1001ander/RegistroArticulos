@@ -1,0 +1,95 @@
+﻿@page "/Articulo/Edit/{ArticuloId:int}"
+@using RegistroArticulo.Models
+@using RegistroArticulo.Services
+
+@inject RegistrosService registrosService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Editar Artículo</PageTitle>
+
+<div class="container">
+    <div class="card shadow-lg">
+        @* Header *@
+        <div class="card-header">
+            <h4 class="card-title">Editar Artículo</h4>
+        </div>
+
+        @* Body *@
+        <div class="card-body">
+            @if (articulo != null)
+            {
+                <EditForm Model="articulo" OnValidSubmit="GuardarCambios">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <div class="mb-3">
+                        <label for="NombreArticulo" class="form-label">Nombre del Artículo</label>
+                        <InputText id="NombreArticulo" class="form-control" @bind-Value="articulo.NombreArticulo" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Descripcion" class="form-label">Descripción</label>
+                        <InputTextArea id="Descripcion" class="form-control" @bind-Value="articulo.Descripcion" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Cantidad" class="form-label">Cantidad</label>
+                        <InputNumber id="Cantidad" class="form-control" @bind-Value="articulo.Cantidad" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Precio" class="form-label">Precio</label>
+                        <InputNumber id="Precio" class="form-control" @bind-Value="articulo.Precio" />
+                    </div>
+
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="button" class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
+                    </div>
+                </EditForm>
+            }
+            else
+            {
+                <p class="text-danger">El artículo no fue encontrado.</p>
+            }
+        </div>
+
+        @* Footer *@
+        <div class="card-footer">
+            <small class="text-muted">Registro de Artículos</small>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int ArticuloId { get; set; }
+
+    private Articulos? articulo;
+
+    protected override async Task OnInitializedAsync()
+    {
+        articulo = await registrosService.Buscar(ArticuloId);
+    }
+
+    private async Task GuardarCambios()
+    {
+        if (articulo != null)
+        {
+            bool guardado = await registrosService.Guardar(articulo);
+            if (guardado)
+            {
+                NavigationManager.NavigateTo("/Articulo/Index");
+            }
+            else
+            {
+                // Manejar el error
+            }
+        }
+    }
+
+    private void Cancelar()
+    {
+        NavigationManager.NavigateTo("/Articulo/Index");
+    }
+}
