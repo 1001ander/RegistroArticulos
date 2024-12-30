@@ -88,11 +88,11 @@
                 <tbody>
                     @foreach(var articulo in ListaArticulos){
                         <tr>
-                            <td>@articulo.ArticuloId</td>
-                            <td>@articulo.NombreArticulo</td>
-                            <td>@articulo.Descripcion</td>
-                            <td>@articulo.Cantidad</td>
-                            <td>@articulo.Precio</td>
+                            <td class="text-center">@articulo.ArticuloId</td>
+                            <td class="text-center">@articulo.NombreArticulo</td>
+                            <td class="text-center">@articulo.Descripcion</td>
+                            <td class="text-center">@articulo.Cantidad</td>
+                            <td class="text-center">@articulo.Precio</td>
                             
                             @*Editar*@
                             <td>
@@ -117,24 +117,13 @@
                     }
 
                 </tbody>
-                <div class="col-auto">
-                    <div class="input-group">
-                        <InputText class="form-control" @bind-Value="ValorFiltro"></InputText>
-                        
-                    </div>
-                  
-                    <div class="col-auto">
-                        <div class="input-group">
-                            <InputText class="form-control" @bind-Value="ValorFiltro"></InputText>
+               
 
-                        </div>
-
-                    </div>
-
-                </div>
              
                     
             </table>
+           
+
            
  
            

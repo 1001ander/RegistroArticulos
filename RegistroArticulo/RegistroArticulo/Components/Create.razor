@@ -1,0 +1,78 @@
+﻿@page "/Articulo/Create"
+@using RegistroArticulo.Models
+@using RegistroArticulo.Services
+
+@inject RegistrosService registrosService
+@inject NavigationManager Navigation
+
+<PageTitle>Crear Artículo</PageTitle>
+
+<div class="container">
+    <div class="card shadow-lg">
+        @*Header*@
+        <div class="card-header">
+            <h4 class="card-title"><b>Crear Artículo</b></h4>
+        </div>
+
+        @*Body*@
+        <div class="card-body">
+            <EditForm Model="NuevoArticulo" OnValidSubmit="Guardar">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="mb-3">
+                    <label for="nombreArticulo" class="form-label">Nombre Artículo</label>
+                    <InputText id="nombreArticulo" class="form-control" @bind-Value="NuevoArticulo.NombreArticulo" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <InputText id="descripcion" class="form-control" @bind-Value="NuevoArticulo.Descripcion" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="cantidad" class="form-label">Cantidad</label>
+                    <InputNumber id="cantidad" class="form-control" @bind-Value="NuevoArticulo.Cantidad" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="precio" class="form-label">Precio</label>
+                    <InputNumber id="precio" class="form-control" @bind-Value="NuevoArticulo.Precio" />
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success bi bi-save"> Guardar</button>
+                    <button type="button" class="btn btn-secondary bi bi-arrow-left" @onclick="Cancelar"> Cancelar</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    private Articulos NuevoArticulo { get; set; } = new();
+
+    private async Task Guardar()
+    {
+        try
+        {
+            if (await registrosService.Guardar(NuevoArticulo))
+            {
+                Navigation.NavigateTo("/Articulo/Index");
+            }
+            else
+            {
+                Console.WriteLine("Error: No se pudo guardar el artículo.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al guardar: {ex.Message}");
+        }
+    }
+
+    private void Cancelar()
+    {
+        Navigation.NavigateTo("/Articulo/Index");
+    }
+}
