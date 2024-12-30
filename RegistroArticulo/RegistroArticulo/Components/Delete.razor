@@ -1,0 +1,79 @@
+﻿@page "/Articulo/Delete/{ArticuloId:int}"
+@using RegistroArticulo.Models
+@using RegistroArticulo.Services
+
+@inject RegistrosService registrosService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Eliminar Artículo</PageTitle>
+
+<div class="container">
+    <div class="card shadow-lg">
+        @* Header *@
+        <div class="card-header">
+            <h4 class="card-title">Eliminar Artículo</h4>
+        </div>
+
+        @* Body *@
+        <div class="card-body">
+            @if (articulo != null)
+            {
+                <p>¿Está seguro de que desea eliminar el siguiente artículo?</p>
+                <ul>
+                    <li><b>ID:</b> @articulo.ArticuloId</li>
+                    <li><b>Nombre:</b> @articulo.NombreArticulo</li>
+                    <li><b>Descripción:</b> @articulo.Descripcion</li>
+                    <li><b>Cantidad:</b> @articulo.Cantidad</li>
+                    <li><b>Precio:</b> @articulo.Precio</li>
+                </ul>
+
+                <div class="mt-3">
+                    <button class="btn btn-danger" @onclick="EliminarArticulo">Eliminar</button>
+                    <button class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
+                </div>
+            }
+            else
+            {
+                <p class="text-danger">El artículo no fue encontrado.</p>
+            }
+        </div>
+
+        @* Footer *@
+        <div class="card-footer">
+            <small class="text-muted">Registro de Artículos</small>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int ArticuloId { get; set; }
+
+    private Articulos? articulo;
+
+    protected override async Task OnInitializedAsync()
+    {
+        articulo = await registrosService.Buscar(ArticuloId);
+    }
+
+    private async Task EliminarArticulo()
+    {
+        if (articulo != null)
+        {
+            bool eliminado = await registrosService.Eliminar(ArticuloId);
+            if (eliminado)
+            {
+                NavigationManager.NavigateTo("/Articulo/Index");
+            }
+            else
+            {
+                // Manejar el error
+            }
+        }
+    }
+
+    private void Cancelar()
+    {
+        NavigationManager.NavigateTo("/Articulo/Index");
+    }
+}
